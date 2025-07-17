@@ -13,6 +13,7 @@ const Login = () => {
         <input type="email" placeholder="Email Address" className="p-2 my-4 w-full bg-gray-600 rounded-lg bg-opacity-50"/>
         <input type="password" placeholder="password" className="p-2 my-4 w-full bg-gray-600 rounded-lg bg-opacity-50"/>
         <button className="p-4 my-6 bg-red-700 w-full rounded-lg">Sign In</button>
+        <p className="p-4">New to Netflix? Sign Up Now</p>
       </form>
     </div>
   );
