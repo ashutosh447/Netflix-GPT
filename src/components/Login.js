@@ -1,11 +1,27 @@
-import { useState } from "react";
+import { useState , useRef } from "react";
 import Header from "./Header.js";
+import { checkValidData } from "../utils/validate.js";
 
 const Login = () => {
   const [isSignIn, setisSignIn] = useState(true);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const email = useRef(null);
+  const password = useRef(null);
+  const confirmPassword = useRef(null);
+  const name = useRef(null);
+
   const handleSignUp = () => {
     setisSignIn(!isSignIn);
   };
+  const handleButtonClick = () => {
+    const emailValue = email.current.value;
+    const passwordValue = password.current.value;
+    const confirmPasswordValue = !isSignIn ? confirmPassword.current.value : "";
+    const nameValue = !isSignIn ? name.current.value : "";
+
+    const message = checkValidData(emailValue , passwordValue , confirmPasswordValue , nameValue , isSignIn);
+    setErrorMessage(message);
+  }
   return (
     <div>
       <Header />
@@ -20,29 +36,37 @@ const Login = () => {
         </h1>
         {!isSignIn && (
           <input
+            ref={name}
             type="text"
             placeholder="User Name"
             className="p-2 my-4 w-full bg-gray-600 rounded-lg bg-opacity-50"
           />
         )}
         <input
+          ref={email}
           type="email"
           placeholder="Email Address"
           className="p-2 my-4 w-full bg-gray-600 rounded-lg bg-opacity-50"
         />
         <input
+          ref={password}
           type="password"
           placeholder={isSignIn ? "password" : "Create New Password"}
           className="p-2 my-4 w-full bg-gray-600 rounded-lg bg-opacity-50"
         />
         {!isSignIn && (
           <input
+            ref={confirmPassword}
             type="password"
             placeholder="Confirm New Password"
             className="p-2 my-4 w-full bg-gray-600 rounded-lg bg-opacity-50"
           />
         )}
-        <button className="p-4 my-6 bg-red-700 w-full rounded-lg">
+        <p className="text-red-700 font-bold">{errorMessage}</p>
+        <button
+          className="p-4 my-6 bg-red-700 w-full rounded-lg"
+          onClick={handleButtonClick}
+        >
           {isSignIn ? "Sign In" : "Sign Up"}
         </button>
         <p className="p-4 cursor-pointer" onClick={handleSignUp}>
